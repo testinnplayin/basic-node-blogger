@@ -8,16 +8,17 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
 const BlogPosts = require('./models');
-
+console.log(BlogPosts);
+// console.log(BlogPosts.BlogPosts.temp);
 //Some preloaded blog posts
 
-BlogPosts.create('Node is fun', 'Seriously, it really is!', 'R Wood', 'Today');
-BlogPosts.create('The sky is falling on our heads', 'And I have a menhir or two to sell.', 'Obelix', 'Gallo-Roman times');
+BlogPosts.Posts.create('Node is fun', 'Seriously, it really is!', 'R Wood', 'Today');
+BlogPosts.Posts.create('The sky is falling on our heads', 'And I have a menhir or two to sell.', 'Obelix', 'Gallo-Roman times');
 
 //CRUD functions
 
 router.get('/', (req, res) => {
-	res.json(BlogPosts.get());
+	res.json(BlogPosts.Posts.get());
 });
 
 router.post('/', jsonParser, (req, res) => {
@@ -35,7 +36,7 @@ router.post('/', jsonParser, (req, res) => {
 		}
 	}
 
-	const blog = BlogPosts.create(req.body.title, req.body.content, req.body.author, req.bodt.publishDate);
+	const blog = BlogPosts.Posts.create(req.body.title, req.body.content, req.body.author, req.body.publishDate);
 	res.status(200).json(blog);
 });
 
