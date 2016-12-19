@@ -32,5 +32,5 @@ describe('BlogPosts', function() {
 			});
 	});
 
-	it();
+	//it();
 });
