@@ -49,14 +49,14 @@ describe('BlogPosts', function() {
 	});
 
 	it('should update a blog post on PUT', function() {
-		const updatePost = {title: 'Only One Menhir Left', content: 'We sold one menhir, only one discount menhir left!', author: 'Obelix'};
+		const updatePost = {title: 'Only One Menhir Left', content: 'We sold one menhir, only one discount menhir left!', author: 'Obelix', publishDate: 'Gallo-Roman times'};
 
 		return chai.request(app)
 			.get('/blog-posts')
 			.then(function(res) {
 				updatePost.id = res.body[0].id;
 				return chai.request(app)
-					.put('/blog-posts/${updatePost.id}')
+					.put(`/blog-posts/${updatePost.id}`)
 					.send(updatePost);
 			})
 			.then(function(res) {
@@ -64,6 +64,18 @@ describe('BlogPosts', function() {
 				res.should.be.json;
 				res.body.should.be.a('object');
 				res.body.should.deep.equal(updatePost);
+			});
+	});
+
+	it('should delete a blog post on DELETE', function() {
+		return chai.request(app)
+			.get('/blog-posts')
+			.then(function(res) {
+				return chai.request(app)
+					.delete(`/blog-posts/${res.body[0].id}`);
+			})
+			.then(function(res) {
+				res.should.have.status(204);
 			});
 	});
 
